@@ -1,10 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Loader from '../components/Loader.astro';
 ---
 
 <Layout title="Odin ALEXANDRE Portfolio">
 	<main>
-		<h1>Portfolio of Odin ALEXANDRE</h1>
+        <Loader />
+		<h1 class="title">Portfolio of Odin ALEXANDRE</h1>
 	</main>
 </Layout>
 
@@ -19,6 +21,20 @@ import Layout from '../layouts/Layout.astro';
 
     h1 {
     text-align: center;
-	color: whitesmoke
+	color: whitesmoke;
+    font-size: 5rem;
     }
 </style>
+
+<script>
+ import { gsap } from "gsap";
+    gsap.from(".title", 1.5, { 
+        delay: 3.2,
+        x: -1600,
+        stagger: {
+            amount: 0.5
+        },
+        ease: "power4.inOut"
+    });
+
+</script>
