@@ -2,9 +2,12 @@
 
 ---
 <div class="loader">
-    <h1 class="hundred">0</h1>
-    <h1 class="counter">00</h1>
-    
+    <div class="containerloader">
+        <div class="start-counter">
+            <h1 id="counter">000</h1>
+        </div>
+        </div>
+    </div>
 </div>
 
 
@@ -30,64 +33,64 @@
         font-weight: 700;
         margin: 0;
     }
+    .containerloader{
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        overflow: hidden;
+        width: 100%;
+        height:30%;
+    }
 </style>
 
 
 
 <script>
- import { gsap } from "gsap";
-    function startloader(){
-        //define varaiables
-        let counter = document.querySelector('.counter');
-        let hundred = document.querySelector('.hundred');
-        let currentValue = 0;
-        let delay = 28;
-
-        function updateCounter(){
-            if(currentValue === 99){
-                if (counter) {
-                    counter.textContent = '00';
-                }
-                if (hundred) {
-                    hundred.textContent = '1';
-                }
-                return;
-            }
-
-            currentValue++;
-
-            if(currentValue >99){
-                currentValue = 99;
-            }
-
-            if (counter) {
-                if (currentValue < 10) {
-                    counter.textContent = '0' + String(currentValue);
-                } else {
-                    counter.textContent = String(currentValue);
-                }
-                
-            }    
-            setTimeout(updateCounter, delay);  
-        };
-
-        updateCounter();
-    };
-    startloader();
-
-    gsap.to(".counter",0.25,{
-        delay: 2.9,
-        opacity: 0,
-    });
-    gsap.to(".hundred",0.25,{
-        delay: 2.9,
-        opacity: 0,
-    });
-    gsap.to(".loader",1.5,{
-        delay: 3.1,
-        duration: 1.2,
-        y: "100%",
-        ease: "power4.out",
-    });
-    
-</script>
+    import { gsap } from "gsap";
+   
+    function startLoader() {
+       let counter = document.querySelector('#counter');
+       let currentValue = 0;
+       let delay = 30;
+   
+       function updateCounter() {
+           if (currentValue === 99) {
+               slideAnimation();
+               return;
+           }
+   
+           currentValue++;
+           (counter as HTMLElement).textContent = currentValue < 10 ? '00' + currentValue : '0' + currentValue;
+           setTimeout(updateCounter, delay);
+       }
+   
+       function slideAnimation() {
+           gsap.to("#counter", { duration: 0.6, y: "-100%", ease: "power2.inOut" });
+   
+           let finalCounter = document.createElement("h1");
+           Object.assign(finalCounter.style, {
+               fontSize: "16rem",
+               fontFamily: "Cardo, serif",
+               position: "absolute",
+               bottom: "-100%",
+               opacity: "0"
+           });
+           finalCounter.textContent = "100";
+   
+        const container = document.querySelector(".containerloader");
+        if (container) {
+            container.appendChild(finalCounter);
+        }
+   
+           gsap.to(finalCounter, { duration: 0.6, bottom: "0%", opacity: 1, ease: "power2.inOut", delay: 0.2 });
+       }
+   
+       updateCounter();
+   }
+   
+   startLoader();
+   
+   gsap.to(".loader", { delay: 3.7, duration: 1.6, y: "100%", ease: "power3.out" });
+   </script>
